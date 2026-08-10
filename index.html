@@ -274,7 +274,7 @@ body{font-family:'Chalkboard SE','Trebuchet MS',sans-serif}
 .angel-wings .feather{fill:#f7fbff;stroke:#a9c7df;stroke-width:2.4;stroke-linejoin:round}
 .spirit-halo{position:absolute;z-index:4;left:39%;top:27%;width:22%;height:4.5%;border:5px solid #ffe579;border-radius:50%;box-shadow:0 0 10px #fff3a8,0 0 19px #ffc928;transform:rotate(-4deg)}
 @keyframes oldSceneFade{0%,10%{opacity:1}55%{opacity:.58}84%{opacity:.18}100%{opacity:0}}
-@keyframes spiritAscend{0%{transform:translateY(0) scale(.98);opacity:0}8%{opacity:.88}35%{transform:translateY(-16vh) scale(.9);opacity:.88}76%{transform:translateY(-54vh) scale(.73);opacity:.84}90%{opacity:.8}100%{transform:translateY(-94vh) scale(.48);opacity:0}}
+@keyframes spiritAscend{0%{transform:translateY(0) scale(.735);opacity:0}8%{opacity:.88}35%{transform:translateY(-16vh) scale(.675);opacity:.88}76%{transform:translateY(-54vh) scale(.548);opacity:.84}90%{opacity:.8}100%{transform:translateY(-94vh) scale(.36);opacity:0}}
 @keyframes wingFlapLeft{from{transform:rotate(24deg) scaleY(.82)}to{transform:rotate(-18deg) scaleY(1.06)}}
 @keyframes wingFlapRight{from{transform:rotate(-24deg) scaleY(.82)}to{transform:rotate(18deg) scaleY(1.06)}}
 .grave-fx{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:visible;visibility:hidden}
@@ -308,8 +308,9 @@ body{font-family:'Chalkboard SE','Trebuchet MS',sans-serif}
 .actions{right:12px;bottom:72px;width:47px;height:47px;margin:0}
 .action{display:grid;place-items:center;width:47px;height:47px;padding:0;color:#fff;background:linear-gradient(#282828,#0c0c0c 70%,#252525);border:3px solid #3c1d0d;clip-path:polygon(6% 3%,92% 1%,100% 10%,97% 91%,88% 99%,5% 96%,1% 9%);font-family:Arial,sans-serif;font-size:31px;line-height:1;box-shadow:0 3px 7px #000b;transform:rotate(1deg)}
 .action:before{display:none}
-.app{background-position:center!important;background-size:cover!important;background-repeat:no-repeat!important}
-.app:before{inset:0;background-position:center;background-size:cover}
+.app{background:#050505!important;background-image:none!important}
+.app:before{inset:0;background-position:center;background-size:auto 90%;background-repeat:no-repeat}
+.spirit-old-scene{background-color:#050505;background-size:auto 90%}
 @media(max-height:700px){.counter{top:177px;width:74px;height:63px}.counter .n{top:3px;font-size:32px}.plus{bottom:164px;width:158px;height:45px}.stats,.stats-flash .stats{bottom:59px;width:110px;height:42px}.stat:nth-child(3) b{left:45px;top:12px;font-size:24px}.actions{right:10px;bottom:59px;width:42px;height:42px}.action{width:42px;height:42px;font-size:28px}}
 @media(prefers-reduced-motion:reduce){.blood-transition{display:none}}
 </style>
@@ -631,7 +632,7 @@ function stopSpiritTransition(){
  spiritToken++;clearTimeout(spiritTimer);spiritTransition.classList.remove('active');spiritTransition.style.removeProperty('--spirit-image');spiritTransition.style.removeProperty('--old-scene-image');spiritTransition.style.removeProperty('--spirit-speed');
 }
 function startSpiritTransition(onDone){
- stopSpiritTransition();const token=++spiritToken,duration=2200+Math.floor(Math.random()*550);
+ stopSpiritTransition();const token=++spiritToken,duration=4400+Math.floor(Math.random()*1100);
  const animalMatch=currentBackground.match(/background-animals\/(fox|kangaroo|koala|wombat)\//),animal=animalMatch?animalMatch[1]:'kangaroo',spiritImage=`assets/spirits/${animal}-spirit.png?v=injured2`;
  spiritTransition.style.setProperty('--spirit-image',`url('${spiritImage}')`);spiritTransition.style.setProperty('--old-scene-image',`url('${currentBackground}')`);spiritTransition.style.setProperty('--spirit-speed',`${duration}ms`);spiritTransition.classList.remove('active');void spiritTransition.offsetWidth;spiritTransition.classList.add('active');document.body.dataset.effectPhase='spirit';document.body.dataset.spiritDuration=String(duration);document.body.dataset.spiritAnimal=animal;
  spiritTimer=setTimeout(()=>{if(token!==spiritToken)return;spiritTransition.classList.remove('active');document.body.dataset.effectPhase='idle';document.body.dataset.effectDuration=String(Math.round(performance.now()-stableSequenceStart));onDone();},duration+40);
